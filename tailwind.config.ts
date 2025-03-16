@@ -72,10 +72,10 @@ export default {
         },
         rank: {
           a: '#22c55e', // green
-          b: '#84cc16', // lime
-          c: '#eab308', // yellow
-          d: '#f97316', // orange
-          e: '#ef4444', // red
+          b: '#3b82f6', // blue
+          c: '#6366f1', // indigo
+          d: '#8b5cf6', // purple
+          e: '#ec4899', // pink
           f: '#6b7280', // gray
         }
 			},
