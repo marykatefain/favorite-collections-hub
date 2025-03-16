@@ -1,9 +1,7 @@
 
 import React from "react";
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Card } from "@/components/ui/card";
 
 interface CollectionCarouselProps {
   images: string[];
@@ -25,12 +23,13 @@ const CollectionCarousel = ({ images, collectionId }: CollectionCarouselProps) =
       opts={{
         align: "start",
         loop: images.length > 3,
+        containScroll: "trimSnaps",
       }}
       className="w-full"
     >
-      <CarouselContent className="-ml-1">
+      <CarouselContent className="-ml-2 -mr-2">
         {images.map((image, index) => (
-          <CarouselItem key={index} className="pl-1 md:basis-1/3 basis-1/2">
+          <CarouselItem key={index} className="pl-2 md:basis-1/3 lg:basis-1/4 basis-1/2">
             <div className="p-1">
               <AspectRatio ratio={1 / 1}>
                 <img
@@ -43,10 +42,6 @@ const CollectionCarousel = ({ images, collectionId }: CollectionCarouselProps) =
           </CarouselItem>
         ))}
       </CarouselContent>
-      <div className="flex justify-end gap-1 mt-2">
-        <CarouselPrevious className="relative static left-0 right-auto translate-y-0 h-8 w-8" />
-        <CarouselNext className="relative static right-0 translate-y-0 h-8 w-8" />
-      </div>
     </Carousel>
   );
 };
