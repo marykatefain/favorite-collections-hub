@@ -1,3 +1,4 @@
+
 // This is a simplified Nostr service for demo purposes
 // In a real application, we would use a proper Nostr client library
 
@@ -214,7 +215,7 @@ export const getFeedItems = async (): Promise<any[]> => {
   // Simulate API request
   return new Promise((resolve) => {
     setTimeout(() => {
-      // Demo feed data
+      // Demo feed data with images
       resolve([
         {
           id: "feed1",
@@ -247,7 +248,7 @@ export const getFeedItems = async (): Promise<any[]> => {
           },
           timestamp: new Date(Date.now() - 7200 * 1000).toISOString(),
           item: {
-            id: "item6",
+            id: "item21",
             title: "Bohemian Rhapsody",
             type: "music",
             imageUrl: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745",
@@ -268,7 +269,7 @@ export const getFeedItems = async (): Promise<any[]> => {
           },
           timestamp: new Date(Date.now() - 86400 * 1000).toISOString(),
           item: {
-            id: "item4",
+            id: "item11",
             title: "Sapiens: A Brief History of Humankind",
             type: "book",
             imageUrl: "https://images.unsplash.com/photo-1589998059171-988d887df646",
@@ -279,6 +280,48 @@ export const getFeedItems = async (): Promise<any[]> => {
           comments: 3,
           zaps: 5,
         },
+        {
+          id: "feed4",
+          user: {
+            id: "user4",
+            username: "dave",
+            avatarUrl: "https://images.unsplash.com/photo-1552374196-c4e7ffc6e126",
+            rank: "B",
+          },
+          timestamp: new Date(Date.now() - 172800 * 1000).toISOString(),
+          item: {
+            id: "item31",
+            title: "The Shining",
+            type: "movie",
+            imageUrl: "https://images.unsplash.com/photo-1509248961158-e54f6934749c",
+          },
+          collectionName: "Horror Movies",
+          collectionId: "collection4",
+          likes: 31,
+          comments: 7,
+          zaps: 12,
+        },
+        {
+          id: "feed5",
+          user: {
+            id: "user5",
+            username: "eve",
+            avatarUrl: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80",
+            rank: "A",
+          },
+          timestamp: new Date(Date.now() - 259200 * 1000).toISOString(),
+          item: {
+            id: "item22",
+            title: "Stairway to Heaven",
+            type: "music",
+            imageUrl: "https://images.unsplash.com/photo-1511379938547-c1f69419868d",
+          },
+          collectionName: "Favorite Music",
+          collectionId: "collection3",
+          likes: 57,
+          comments: 15,
+          zaps: 23,
+        },
       ]);
     }, 500);
   });
@@ -288,7 +331,7 @@ export const getGlobalCharts = async (category?: string): Promise<any[]> => {
   // Simulate API request
   return new Promise((resolve) => {
     setTimeout(() => {
-      // Demo chart data
+      // Demo chart data with images
       resolve([
         {
           id: "item1",
@@ -311,7 +354,7 @@ export const getGlobalCharts = async (category?: string): Promise<any[]> => {
           collections: 756,
         },
         {
-          id: "item6",
+          id: "item21",
           rank: 3,
           previousRank: 5,
           title: "Bohemian Rhapsody",
@@ -321,7 +364,7 @@ export const getGlobalCharts = async (category?: string): Promise<any[]> => {
           collections: 701,
         },
         {
-          id: "item4",
+          id: "item11",
           rank: 4,
           previousRank: 3,
           title: "Sapiens: A Brief History of Humankind",
@@ -331,13 +374,64 @@ export const getGlobalCharts = async (category?: string): Promise<any[]> => {
           collections: 689,
         },
         {
-          id: "item14",
+          id: "item23",
           rank: 5,
-          title: "Breaking Bad",
-          type: "tvshow",
-          imageUrl: "https://images.unsplash.com/photo-1613294326794-e7c71a328b0e",
+          previousRank: 6,
+          title: "Hotel California",
+          type: "music",
+          imageUrl: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f",
           score: 89,
           collections: 654,
+        },
+        {
+          id: "item13",
+          rank: 6,
+          previousRank: 4,
+          title: "To Kill a Mockingbird",
+          type: "book",
+          imageUrl: "https://images.unsplash.com/photo-1512820790803-83ca734da794",
+          score: 88,
+          collections: 623,
+        },
+        {
+          id: "item2",
+          rank: 7,
+          previousRank: 9,
+          title: "The Godfather",
+          type: "movie",
+          imageUrl: "https://images.unsplash.com/photo-1536440136628-849c177e76a1",
+          score: 87,
+          collections: 615,
+        },
+        {
+          id: "item31",
+          rank: 8,
+          previousRank: 7,
+          title: "The Shining",
+          type: "movie",
+          imageUrl: "https://images.unsplash.com/photo-1509248961158-e54f6934749c",
+          score: 85,
+          collections: 587,
+        },
+        {
+          id: "item14",
+          rank: 9,
+          previousRank: 8,
+          title: "1984",
+          type: "book",
+          imageUrl: "https://images.unsplash.com/photo-1544947950-fa07a98d237f",
+          score: 83,
+          collections: 562,
+        },
+        {
+          id: "item22",
+          rank: 10,
+          previousRank: 10,
+          title: "Stairway to Heaven",
+          type: "music",
+          imageUrl: "https://images.unsplash.com/photo-1511379938547-c1f69419868d",
+          score: 82,
+          collections: 541,
         },
       ]);
     }, 500);
