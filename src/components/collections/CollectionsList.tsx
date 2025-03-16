@@ -64,7 +64,7 @@ const CollectionsList = ({
             
             {/* Render child collections if any */}
             {childCollectionsByParent[collection.id] && 
-              <div className="pl-4 space-y-4 mt-4 border-l-2 border-muted">
+              <div className="pl-4 border-l-2 border-muted">
                 {childCollectionsByParent[collection.id].map(childCollection => (
                   <CollectionCard 
                     key={childCollection.id} 

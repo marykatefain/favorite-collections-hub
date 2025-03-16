@@ -29,7 +29,7 @@ const CollectionCard = ({
   shares = 0,
 }: CollectionCardProps) => {
   return (
-    <Link to={`/collection/${id}`}>
+    <Link to={`/collection/${id}`} className="block mb-4">
       <Card className="collection-card hover:bg-muted/30 animate-scale-in">
         <CardHeader className="p-0 pb-2 space-y-0">
           <div className="flex justify-between items-center">
