@@ -30,7 +30,7 @@ const CollectionCard = ({
         </CardHeader>
         <CardContent className="p-0">
           <div className="flex items-center justify-between">
-            <span className="text-sm text-muted-foreground">
+            <span className="text-sm text-darker">
               {itemCount} {itemType}
               {itemCount !== 1 ? "s" : ""}
             </span>
