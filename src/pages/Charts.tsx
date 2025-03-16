@@ -9,6 +9,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ItemType } from "@/components/items/ItemCard";
 import { Input } from "@/components/ui/input";
 import { Search, ChevronLeft, ChevronRight } from "lucide-react";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const chartCategories = [
   { id: "all", label: "All", type: null },
@@ -30,6 +32,7 @@ const Charts = () => {
   const [showScrollButtons, setShowScrollButtons] = useState(false);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
+  const isMobile = useIsMobile();
 
   // Check if tabs need scroll buttons
   useEffect(() => {
@@ -37,7 +40,7 @@ const Charts = () => {
       if (!tabsListRef.current) return;
       
       const { scrollWidth, clientWidth, scrollLeft } = tabsListRef.current;
-      setShowScrollButtons(scrollWidth > clientWidth);
+      setShowScrollButtons(scrollWidth > clientWidth && !isMobile);
       setCanScrollLeft(scrollLeft > 0);
       setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 5); // 5px buffer
     };
@@ -48,7 +51,7 @@ const Charts = () => {
     return () => {
       window.removeEventListener('resize', checkScroll);
     };
-  }, []);
+  }, [isMobile]);
 
   // Update scroll indicators when scrolling
   const handleScroll = () => {
@@ -163,7 +166,7 @@ const Charts = () => {
             <TabsList 
               ref={tabsListRef}
               onScroll={handleScroll}
-              className="mb-4 w-full flex overflow-x-auto scrollbar-hide"
+              className={`mb-4 w-full flex overflow-x-auto ${isMobile ? 'scrollbar-none' : ''}`}
             >
               {chartCategories.map((category) => (
                 <TabsTrigger 
