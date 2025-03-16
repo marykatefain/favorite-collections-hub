@@ -45,7 +45,7 @@ const ItemDetail = () => {
           comments: 128,
           zaps: 75,
           addedAt: new Date(Date.now() - 3600 * 24 * 7 * 1000).toISOString(),
-          comments: [
+          commentsList: [
             {
               id: "comment1",
               user: {
@@ -268,10 +268,10 @@ const ItemDetail = () => {
             
             <Card>
               <CardHeader className="pb-3">
-                <h2 className="text-lg font-semibold">Comments ({item.comments.length})</h2>
+                <h2 className="text-lg font-semibold">Comments ({item.commentsList.length})</h2>
               </CardHeader>
               <CardContent className="space-y-4">
-                {item.comments.map((comment: any) => (
+                {item.commentsList.map((comment: any) => (
                   <div key={comment.id} className="space-y-2">
                     <div className="flex gap-3">
                       <Link to={`/profile/${comment.user.id}`}>

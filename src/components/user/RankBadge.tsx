@@ -8,9 +8,10 @@ interface RankBadgeProps {
   rank: Rank;
   size?: "sm" | "md" | "lg";
   showLabel?: boolean;
+  className?: string;
 }
 
-const RankBadge = ({ rank, size = "md", showLabel = false }: RankBadgeProps) => {
+const RankBadge = ({ rank, size = "md", showLabel = false, className }: RankBadgeProps) => {
   const rankColors: Record<Rank, string> = {
     A: "bg-rank-a border-rank-a",
     B: "bg-rank-b border-rank-b",
@@ -36,7 +37,7 @@ const RankBadge = ({ rank, size = "md", showLabel = false }: RankBadgeProps) => 
   };
 
   return (
-    <div className="flex items-center gap-1.5">
+    <div className={cn("flex items-center gap-1.5", className)}>
       <div 
         className={cn(
           "flex items-center justify-center rounded-full border-2 text-white font-bold",
