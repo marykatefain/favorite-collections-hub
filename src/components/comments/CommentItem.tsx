@@ -17,6 +17,7 @@ export interface CommentData {
     avatarUrl?: string;
     rank?: Rank;
   };
+  likes?: number;
 }
 
 interface CommentItemProps {
