@@ -10,6 +10,7 @@ import Charts from "./pages/Charts";
 import Discover from "./pages/Discover";
 import ItemDetail from "./pages/ItemDetail";
 import CollectionDetail from "./pages/CollectionDetail";
+import AddCollection from "./pages/AddCollection";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -28,6 +29,7 @@ const App = () => (
           <Route path="/discover" element={<Discover />} />
           <Route path="/item/:id" element={<ItemDetail />} />
           <Route path="/collection/:id" element={<CollectionDetail />} />
+          <Route path="/collection/add" element={<AddCollection />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
