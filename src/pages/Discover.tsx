@@ -3,10 +3,14 @@ import React from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Search, TrendingUp, Users, BarChart4 } from "lucide-react";
+import { Search, Flame, Users, BarChart4 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Link } from "react-router-dom";
 import RankBadge from "@/components/user/RankBadge";
+import { useToast } from "@/hooks/use-toast";
+import { useState, useEffect } from "react";
+import { getGlobalCharts } from "@/lib/nostr";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const Discover = () => {
   // Mock data for suggested users
@@ -34,11 +38,47 @@ const Discover = () => {
     },
   ];
 
-  // Mock data for trending tags
-  const trendingTags = [
-    "SummerReads", "ClassicFilms", "IndieMusic", "TechBooks", 
-    "SciFiMovies", "90sNostalgia", "TravelDocs", "CultClassics"
-  ];
+  // State for trending items
+  const [trendingItems, setTrendingItems] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const { toast } = useToast();
+
+  // Fetch trending items
+  useEffect(() => {
+    const fetchTrendingItems = async () => {
+      setIsLoading(true);
+      try {
+        // Get global charts and filter for trending items (those with significant rank changes)
+        const chartItems = await getGlobalCharts();
+        // Find items that are trending (rising in ranks)
+        const trending = chartItems
+          .filter(item => {
+            // Items that have moved up in rank or are new
+            return item.previousRank === undefined || (item.previousRank - item.rank) > 0;
+          })
+          .sort((a, b) => {
+            // Sort by how much they've improved in rank
+            const aImprovement = a.previousRank ? a.previousRank - a.rank : 10;
+            const bImprovement = b.previousRank ? b.previousRank - b.rank : 10;
+            return bImprovement - aImprovement;
+          })
+          .slice(0, 5); // Take the top 5 trending items
+          
+        setTrendingItems(trending);
+      } catch (error) {
+        console.error("Failed to load trending items:", error);
+        toast({
+          title: "Error",
+          description: "Failed to load trending items",
+          variant: "destructive",
+        });
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchTrendingItems();
+  }, [toast]);
 
   return (
     <MainLayout>
@@ -90,29 +130,72 @@ const Discover = () => {
             </CardContent>
           </Card>
           
-          {/* Trending Tags Section */}
+          {/* Trending Items Section */}
           <Card>
             <CardHeader className="pb-3">
               <div className="flex items-center justify-between">
                 <div>
-                  <CardTitle className="text-base">Trending Tags</CardTitle>
-                  <CardDescription>Popular topics right now</CardDescription>
+                  <CardTitle className="text-base">Trending Items</CardTitle>
+                  <CardDescription>What's rising in popularity</CardDescription>
                 </div>
-                <TrendingUp className="h-5 w-5 text-muted-foreground" />
+                <Flame className="h-5 w-5 text-nostr-orange" />
               </div>
             </CardHeader>
             <CardContent>
-              <div className="flex flex-wrap gap-2">
-                {trendingTags.map((tag) => (
-                  <Link 
-                    key={tag} 
-                    to={`/tags/${tag.toLowerCase()}`}
-                    className="px-3 py-1 bg-muted rounded-full text-sm hover:bg-nostr-purple hover:text-white transition-colors"
-                  >
-                    #{tag}
-                  </Link>
-                ))}
-              </div>
+              {isLoading ? (
+                <div className="space-y-3">
+                  {[1, 2, 3, 4, 5].map((i) => (
+                    <Skeleton key={i} className="h-16 w-full" />
+                  ))}
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {trendingItems.length > 0 ? (
+                    trendingItems.map((item) => (
+                      <Link 
+                        key={item.id} 
+                        to={`/item/${item.id}`}
+                        className="flex items-center gap-3 hover:bg-muted/50 p-2 rounded-md -mx-2"
+                      >
+                        <div className="w-12 h-12 rounded-md overflow-hidden bg-muted flex-shrink-0">
+                          {item.imageUrl ? (
+                            <img 
+                              src={item.imageUrl} 
+                              alt={item.title} 
+                              className="w-full h-full object-cover" 
+                            />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center text-lg">
+                              {item.type === "movie" ? "🎥" : 
+                               item.type === "music" ? "🎵" : 
+                               item.type === "book" ? "📚" : 
+                               item.type === "tvshow" ? "📺" : 
+                               item.type === "article" ? "📄" : 
+                               item.type === "game" ? "🎮" : "🔗"}
+                            </div>
+                          )}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="font-medium truncate">{item.title}</p>
+                          <div className="flex items-center text-sm">
+                            <span className="text-nostr-purple">
+                              {item.previousRank === undefined ? (
+                                "New Entry"
+                              ) : (
+                                <>↑ {item.previousRank - item.rank} ranks</>
+                              )}
+                            </span>
+                            <span className="text-muted-foreground mx-1">•</span>
+                            <span className="text-muted-foreground">#{item.rank} in charts</span>
+                          </div>
+                        </div>
+                      </Link>
+                    ))
+                  ) : (
+                    <p className="text-muted-foreground text-center py-2">No trending items available</p>
+                  )}
+                </div>
+              )}
             </CardContent>
           </Card>
           
