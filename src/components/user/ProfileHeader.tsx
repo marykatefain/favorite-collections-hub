@@ -43,7 +43,7 @@ const ProfileHeader = ({
           <div>
             <div className="flex items-center gap-2">
               <h1 className="text-xl font-bold">{username}</h1>
-              <RankBadge rank={rank} showLabel />
+              <RankBadge rank={rank} />
             </div>
             <p className="text-sm text-muted-foreground">{truncatedNpub}</p>
           </div>
