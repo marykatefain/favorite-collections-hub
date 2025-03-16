@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState, useRef } from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import ChartItem from "@/components/charts/ChartItem";
@@ -9,7 +8,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ItemType } from "@/components/items/ItemCard";
 import { Input } from "@/components/ui/input";
 import { Search, ChevronLeft, ChevronRight } from "lucide-react";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 const chartCategories = [
@@ -34,7 +32,6 @@ const Charts = () => {
   const [canScrollRight, setCanScrollRight] = useState(false);
   const isMobile = useIsMobile();
 
-  // Check if tabs need scroll buttons
   useEffect(() => {
     const checkScroll = () => {
       if (!tabsListRef.current) return;
@@ -53,7 +50,6 @@ const Charts = () => {
     };
   }, [isMobile]);
 
-  // Update scroll indicators when scrolling
   const handleScroll = () => {
     if (!tabsListRef.current) return;
     
@@ -62,7 +58,6 @@ const Charts = () => {
     setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 5); // 5px buffer
   };
 
-  // Scroll tabs left or right
   const scrollTabs = (direction: 'left' | 'right') => {
     if (!tabsListRef.current) return;
     
@@ -81,8 +76,8 @@ const Charts = () => {
     const loadCharts = async () => {
       setIsLoading(true);
       try {
-        // In a real app, we would filter by category
-        const items = await getGlobalCharts();
+        const categoryType = chartCategories.find(cat => cat.id === activeCategory)?.type as ItemType | null;
+        const items = await getGlobalCharts(categoryType || undefined);
         setChartItems(items);
         setFilteredItems(items);
       } catch (error) {
@@ -98,35 +93,28 @@ const Charts = () => {
     };
 
     loadCharts();
-  }, [toast]);
+  }, [toast, activeCategory]);
 
-  // Filter charts when category or search query changes
   useEffect(() => {
-    if (chartItems.length > 0) {
-      let filtered = chartItems;
-      
-      // Filter by category
-      if (activeCategory !== 'all') {
-        const categoryType = chartCategories.find(cat => cat.id === activeCategory)?.type;
-        if (categoryType) {
-          filtered = filtered.filter(item => item.type === categoryType);
-        }
-      }
-      
-      // Filter by search query
-      if (searchQuery.trim() !== '') {
-        const query = searchQuery.toLowerCase();
-        filtered = filtered.filter(item => 
-          item.title.toLowerCase().includes(query)
-        );
-      }
+    if (chartItems.length > 0 && searchQuery.trim() !== '') {
+      const query = searchQuery.toLowerCase();
+      const filtered = chartItems.filter(item => 
+        item.title.toLowerCase().includes(query)
+      );
       
       setFilteredItems(filtered);
+    } else {
+      setFilteredItems(chartItems);
     }
-  }, [chartItems, activeCategory, searchQuery]);
+  }, [chartItems, searchQuery]);
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
+  };
+
+  const handleCategoryChange = (category: string) => {
+    setActiveCategory(category);
+    setSearchQuery('');
   };
 
   return (
@@ -134,7 +122,6 @@ const Charts = () => {
       <div className="py-4">
         <h1 className="text-2xl font-bold mb-4">Global Charts</h1>
         
-        {/* Search Bar */}
         <div className="relative mb-4">
           <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
             <Search className="h-4 w-4 text-muted-foreground" />
@@ -148,9 +135,8 @@ const Charts = () => {
           />
         </div>
         
-        <Tabs defaultValue="all" onValueChange={setActiveCategory}>
+        <Tabs defaultValue="all" onValueChange={handleCategoryChange}>
           <div className="relative">
-            {/* Left scroll button */}
             {showScrollButtons && (
               <button 
                 onClick={() => scrollTabs('left')}
@@ -162,7 +148,6 @@ const Charts = () => {
               </button>
             )}
             
-            {/* Tabs list with horizontal scroll */}
             <TabsList 
               ref={tabsListRef}
               onScroll={handleScroll}
@@ -179,7 +164,6 @@ const Charts = () => {
               ))}
             </TabsList>
             
-            {/* Right scroll button */}
             {showScrollButtons && (
               <button 
                 onClick={() => scrollTabs('right')}
@@ -195,7 +179,6 @@ const Charts = () => {
           {chartCategories.map((category) => (
             <TabsContent key={category.id} value={category.id}>
               {isLoading ? (
-                // Loading skeletons
                 <div className="space-y-2">
                   {[1, 2, 3, 4, 5].map((i) => (
                     <Skeleton key={i} className="h-20 w-full" />
