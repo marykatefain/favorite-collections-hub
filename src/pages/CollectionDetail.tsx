@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import MainLayout from "@/components/layout/MainLayout";
@@ -8,13 +7,16 @@ import { ArrowLeft, Share2, Users, Plus } from "lucide-react";
 import ItemCard from "@/components/items/ItemCard";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/hooks/use-toast";
-import { getCollectionItems } from "@/lib/nostr";
+import { getCollectionItems, getCollectionComments } from "@/lib/nostr";
 import RankBadge from "@/components/user/RankBadge";
+import CommentsSection from "@/components/comments/CommentsSection";
+import { CommentData } from "@/components/comments/CommentItem";
 
 const CollectionDetail = () => {
   const { id } = useParams<{ id: string }>();
   const [collection, setCollection] = useState<any>(null);
   const [items, setItems] = useState<any[]>([]);
+  const [comments, setComments] = useState<CommentData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
 
@@ -42,6 +44,7 @@ const CollectionDetail = () => {
         });
         
         if (id) {
+          // Fetch items
           const collectionItems = await getCollectionItems(id);
           
           // Transform items to match our component props
@@ -58,6 +61,10 @@ const CollectionDetail = () => {
           }));
           
           setItems(formattedItems);
+          
+          // Fetch comments
+          const collectionComments = await getCollectionComments(id);
+          setComments(collectionComments);
         }
       } catch (error) {
         console.error("Failed to load collection:", error);
@@ -95,7 +102,6 @@ const CollectionDetail = () => {
     });
   };
   
-  // Format date for display
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
       year: 'numeric',
@@ -211,6 +217,10 @@ const CollectionDetail = () => {
                   </div>
                 )}
               </div>
+            </div>
+            
+            <div className="pt-4 border-t">
+              <CommentsSection collectionId={id || ""} comments={comments} />
             </div>
           </div>
         ) : (

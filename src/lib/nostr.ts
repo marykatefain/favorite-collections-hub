@@ -1,4 +1,3 @@
-
 // This is a simplified Nostr service for demo purposes
 // In a real application, we would use a proper Nostr client library
 
@@ -438,4 +437,67 @@ export const getGlobalCharts = async (category?: string): Promise<any[]> => {
   });
 };
 
-// More functions would be added here for a complete implementation
+// Mock data for collection comments
+export const getCollectionComments = async (collectionId: string): Promise<any[]> => {
+  // In a real app, we would fetch comments from Nostr
+  // For now, we'll return mock data
+  await new Promise(resolve => setTimeout(resolve, 500)); // Fake delay
+
+  return [
+    {
+      id: "comment1",
+      text: "This is an amazing collection! I've been looking for movies like these.",
+      createdAt: new Date(Date.now() - 3600 * 24 * 1 * 1000).toISOString(), // 1 day ago
+      user: {
+        id: "user2",
+        username: "bob",
+        avatarUrl: "https://images.unsplash.com/photo-1599566150163-29194dcaad36",
+        rank: "C",
+      },
+    },
+    {
+      id: "comment2",
+      text: "I've watched most of these films - they're great picks. I'd also recommend 'The Prestige' if you like these!",
+      createdAt: new Date(Date.now() - 3600 * 24 * 3 * 1000).toISOString(), // 3 days ago
+      user: {
+        id: "user3",
+        username: "carol",
+        avatarUrl: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80",
+        rank: "A",
+      },
+    },
+    {
+      id: "comment3",
+      text: "Just binged 'Interstellar' last night after seeing it in your collection. Mind-blowing!",
+      createdAt: new Date(Date.now() - 3600 * 24 * 5 * 1000).toISOString(), // 5 days ago
+      user: {
+        id: "user4",
+        username: "dave",
+        avatarUrl: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e",
+        rank: "B",
+      },
+    },
+    {
+      id: "comment4",
+      text: "Have you thought about adding any foreign films to this collection?",
+      createdAt: new Date(Date.now() - 3600 * 24 * 7 * 1000).toISOString(), // 7 days ago
+      user: {
+        id: "user5",
+        username: "emma",
+        avatarUrl: "https://images.unsplash.com/photo-1580489944761-15a19d654956",
+        rank: "S",
+      },
+    },
+    {
+      id: "comment5",
+      text: "Love that you included 'The Shawshank Redemption'. It's a classic for a reason!",
+      createdAt: new Date(Date.now() - 3600 * 24 * 14 * 1000).toISOString(), // 14 days ago
+      user: {
+        id: "user6",
+        username: "frank",
+        avatarUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d",
+        rank: "A",
+      },
+    },
+  ];
+};
