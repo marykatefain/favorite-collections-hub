@@ -55,7 +55,7 @@ const CollectionsList = ({
         )}
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-6">
         {parentCollections.map((collection) => (
           <React.Fragment key={collection.id}>
             <CollectionCard 
@@ -64,12 +64,14 @@ const CollectionsList = ({
             
             {/* Render child collections if any */}
             {childCollectionsByParent[collection.id] && 
-              childCollectionsByParent[collection.id].map(childCollection => (
-                <CollectionCard 
-                  key={childCollection.id} 
-                  {...childCollection} 
-                />
-              ))
+              <div className="pl-4 space-y-4 mt-4 border-l-2 border-muted">
+                {childCollectionsByParent[collection.id].map(childCollection => (
+                  <CollectionCard 
+                    key={childCollection.id} 
+                    {...childCollection} 
+                  />
+                ))}
+              </div>
             }
           </React.Fragment>
         ))}
