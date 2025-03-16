@@ -1,11 +1,9 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Heart, MessageSquare, Zap } from "lucide-react";
 import { cn } from "@/lib/utils";
-import RankBadge from "../user/RankBadge";
 import { ItemType } from "../items/ItemCard";
 
 interface FeedItemProps {
@@ -14,7 +12,7 @@ interface FeedItemProps {
     id: string;
     username: string;
     avatarUrl?: string;
-    rank: "A" | "B" | "C" | "D" | "E" | "F";
+    rank: "A" | "B" | "C" | "D" | "E" | "F" | "S";
   };
   timestamp: string;
   item: {
@@ -91,7 +89,6 @@ const FeedItem = ({
             </Avatar>
             <div className="flex items-center">
               <span className="font-medium">{user.username}</span>
-              <RankBadge rank={user.rank} size="sm" className="ml-1" />
             </div>
           </Link>
           <span className="text-xs text-muted-foreground">{formatTimestamp(timestamp)}</span>
