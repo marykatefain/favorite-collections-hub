@@ -1,4 +1,3 @@
-
 // This is a simplified Nostr service for demo purposes
 // In a real application, we would use a proper Nostr client library
 
@@ -85,7 +84,7 @@ export const getCollections = async (pubkey: string): Promise<NostrCollection[]>
           description: "My all-time favorite movies",
           created_at: Date.now() / 1000 - 3600 * 24 * 7,
           pubkey,
-          items: ["item1", "item2", "item3"],
+          items: ["item1", "item2", "item3", "item4", "item5", "item6", "item7", "item8", "item9", "item10"],
         },
         {
           id: "collection2",
@@ -93,7 +92,7 @@ export const getCollections = async (pubkey: string): Promise<NostrCollection[]>
           description: "Books that changed my life",
           created_at: Date.now() / 1000 - 3600 * 24 * 14,
           pubkey,
-          items: ["item4", "item5"],
+          items: ["item11", "item12", "item13", "item14", "item15", "item16", "item17", "item18", "item19", "item20"],
         },
         {
           id: "collection3",
@@ -101,7 +100,7 @@ export const getCollections = async (pubkey: string): Promise<NostrCollection[]>
           description: "Songs I can't stop listening to",
           created_at: Date.now() / 1000 - 3600 * 24 * 3,
           pubkey,
-          items: ["item6", "item7", "item8", "item9"],
+          items: ["item21", "item22", "item23", "item24", "item25", "item26", "item27", "item28", "item29", "item30"],
         },
         {
           id: "collection4",
@@ -109,7 +108,7 @@ export const getCollections = async (pubkey: string): Promise<NostrCollection[]>
           description: "Scariest movies ever",
           created_at: Date.now() / 1000 - 3600 * 24 * 10,
           pubkey,
-          items: ["item10", "item11"],
+          items: ["item31", "item32", "item33", "item34", "item35", "item36", "item37", "item38", "item39", "item40"],
           parent_id: "collection1"
         },
       ]);
@@ -128,7 +127,11 @@ export const getCollectionItems = async (collectionId: string): Promise<NostrIte
         "https://images.unsplash.com/photo-1509347528160-9a9e33742cdb",
         "https://images.unsplash.com/photo-1440404653325-ab127d49abc1",
         "https://images.unsplash.com/photo-1478720568477-152d9b164e26",
-        "https://images.unsplash.com/photo-1542204165-65bf26472b9b"
+        "https://images.unsplash.com/photo-1542204165-65bf26472b9b",
+        "https://images.unsplash.com/photo-1594909122845-11baa439b7bf",
+        "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c",
+        "https://images.unsplash.com/photo-1524985069026-dd778a71c7b4",
+        "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba"
       ];
       
       const bookImages = [
@@ -136,7 +139,12 @@ export const getCollectionItems = async (collectionId: string): Promise<NostrIte
         "https://images.unsplash.com/photo-1512820790803-83ca734da794",
         "https://images.unsplash.com/photo-1544947950-fa07a98d237f",
         "https://images.unsplash.com/photo-1519682337058-a94d519337bc",
-        "https://images.unsplash.com/photo-1495446815901-a7297e633e8d"
+        "https://images.unsplash.com/photo-1495446815901-a7297e633e8d",
+        "https://images.unsplash.com/photo-1541963463532-d68292c34b19",
+        "https://images.unsplash.com/photo-1497633762265-9d179a990aa6",
+        "https://images.unsplash.com/photo-1516979187457-637abb4f9353",
+        "https://images.unsplash.com/photo-1543002588-bfa74002ed7e",
+        "https://images.unsplash.com/photo-1507842217343-583bb7270b66"
       ];
       
       const musicImages = [
@@ -144,29 +152,55 @@ export const getCollectionItems = async (collectionId: string): Promise<NostrIte
         "https://images.unsplash.com/photo-1511379938547-c1f69419868d",
         "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f",
         "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae",
-        "https://images.unsplash.com/photo-1505740420928-5e560c06d30e"
+        "https://images.unsplash.com/photo-1505740420928-5e560c06d30e",
+        "https://images.unsplash.com/photo-1477233534935-f5e6fe7c1159",
+        "https://images.unsplash.com/photo-1463735142149-8636bafb53f1",
+        "https://images.unsplash.com/photo-1494232410401-ad00d5433cfa",
+        "https://images.unsplash.com/photo-1507838153414-b4b713384a76",
+        "https://images.unsplash.com/photo-1462965326201-d02e4f455804"
+      ];
+      
+      const horrorMovieImages = [
+        "https://images.unsplash.com/photo-1509248961158-e54f6934749c",
+        "https://images.unsplash.com/photo-1602600214998-fda77a54a38f",
+        "https://images.unsplash.com/photo-1509281373149-e957c6296406",
+        "https://images.unsplash.com/photo-1518513333736-7b019c5facd5",
+        "https://images.unsplash.com/photo-1598641795816-a84ac9eac40c",
+        "https://images.unsplash.com/photo-1635805737707-575885ab0820",
+        "https://images.unsplash.com/photo-1604200213928-ba3cf4fc8436",
+        "https://images.unsplash.com/photo-1578632292335-df3abbb0d586",
+        "https://images.unsplash.com/photo-1542253417-3437e0c73146",
+        "https://images.unsplash.com/photo-1611348586840-ea9872d33411"
       ];
       
       let imageSet = movieImages;
+      let titlePrefix = "Movie";
+      let itemType = "movie";
+      
       if (collectionId === "collection2") {
         imageSet = bookImages;
+        titlePrefix = "Book";
+        itemType = "book";
       } else if (collectionId === "collection3") {
         imageSet = musicImages;
+        titlePrefix = "Song";
+        itemType = "music";
+      } else if (collectionId === "collection4") {
+        imageSet = horrorMovieImages;
+        titlePrefix = "Horror Movie";
+        itemType = "movie";
       }
       
-      // Create between 3-6 items
-      const itemCount = Math.max(3, Math.min(6, Math.floor(Math.random() * 7)));
-      const items = Array.from({ length: itemCount }).map((_, i) => ({
-        id: `item${collectionId}-${i+1}`,
-        title: collectionId.includes("1") ? `Movie Title ${i+1}` :
-               collectionId.includes("2") ? `Book Title ${i+1}` :
-               collectionId.includes("3") ? `Song Title ${i+1}` : `Item ${i+1}`,
-        type: collectionId.includes("1") ? "movie" :
-              collectionId.includes("2") ? "book" :
-              collectionId.includes("3") ? "music" : "item",
+      // Create 10 items per collection
+      const items = Array.from({ length: 10 }).map((_, i) => ({
+        id: `item${collectionId === "collection1" ? i+1 : 
+             collectionId === "collection2" ? i+11 : 
+             collectionId === "collection3" ? i+21 : i+31}`,
+        title: `${titlePrefix} Title ${i+1}`,
+        type: itemType,
         url: `https://example.com/${collectionId}/${i+1}`,
         image: imageSet[i % imageSet.length],
-        description: `Description for item ${i+1} in collection ${collectionId}`,
+        description: `Description for ${titlePrefix.toLowerCase()} ${i+1} in collection ${collectionId}`,
         created_at: Date.now() / 1000 - 3600 * 24 * (i+1),
         pubkey: "pubkey1",
       }));
