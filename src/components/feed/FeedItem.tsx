@@ -76,6 +76,7 @@ const FeedItem = ({
     article: "📄",
     meme: "😂",
     person: "👤",
+    game: "🎮",
     other: "🔗",
   };
 

@@ -150,6 +150,7 @@ const ItemDetail = () => {
     article: "📄",
     meme: "😂",
     person: "👤",
+    game: "🎮",
     other: "🔗",
   };
 

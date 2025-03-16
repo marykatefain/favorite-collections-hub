@@ -37,6 +37,7 @@ const ChartItem = ({
     article: "📄",
     meme: "😂",
     person: "👤",
+    game: "🎮",
     other: "🔗",
   };
 
