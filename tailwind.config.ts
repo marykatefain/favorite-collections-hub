@@ -64,19 +64,19 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
         nostr: {
-          purple: '#8B5CF6',
+          purple: '#7E69AB', // Slightly darker purple
           orange: '#F97316',
           blue: '#0EA5E9',
           dark: '#1A1F2C',
           light: '#F1F0FB',
         },
         rank: {
-          a: '#22c55e', // green
-          b: '#3b82f6', // blue
-          c: '#6366f1', // indigo
-          d: '#8b5cf6', // purple
-          e: '#ec4899', // pink
-          f: '#6b7280', // gray
+          a: '#15803d', // Darker green
+          b: '#2563eb', // Darker blue
+          c: '#4f46e5', // Darker indigo
+          d: '#7c3aed', // Darker purple
+          e: '#db2777', // Darker pink
+          f: '#4b5563', // Darker gray
         }
 			},
 			borderRadius: {

@@ -6,24 +6,24 @@
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 26 31 44;
+    --foreground: 222 47% 11%;
 
     --card: 0 0% 100%;
-    --card-foreground: 26 31 44;
+    --card-foreground: 222 47% 11%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 26 31 44;
+    --popover-foreground: 222 47% 11%;
 
-    --primary: 259 94 96;
+    --primary: 259 94% 51%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 25 95 90;
+    --secondary: 25 95% 53%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 249 240 251;
-    --muted-foreground: 75 85 99; /* Darker muted foreground */
+    --muted: 249 40% 95%;
+    --muted-foreground: 222 47% 40%; /* Significantly darker for better readability */
 
-    --accent: 199 89 92;
+    --accent: 199 89% 48%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
@@ -31,31 +31,31 @@
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 259 94 96;
+    --ring: 259 94% 51%;
 
     --radius: 0.5rem;
   }
 
   .dark {
-    --background: 26 31 44;
-    --foreground: 241 240 251;
+    --background: 222 47% 11%;
+    --foreground: 210 40% 98%;
 
-    --card: 26 31 44;
-    --card-foreground: 241 240 251;
+    --card: 222 47% 11%;
+    --card-foreground: 210 40% 98%;
 
-    --popover: 26 31 44;
-    --popover-foreground: 241 240 251;
+    --popover: 222 47% 11%;
+    --popover-foreground: 210 40% 98%;
 
-    --primary: 259 94 96;
+    --primary: 259 94% 60%;
     --primary-foreground: 255 255 255;
 
-    --secondary: 25 95 90;
+    --secondary: 25 95% 53%;
     --secondary-foreground: 255 255 255;
 
     --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted-foreground: 215 20.2% 75%;  /* Lighter in dark mode for contrast */
 
-    --accent: 199 89 92;
+    --accent: 199 89% 48%;
     --accent-foreground: 255 255 255;
 
     --destructive: 0 62.8% 30.6%;
@@ -63,7 +63,7 @@
 
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
-    --ring: 259 94 96;
+    --ring: 259 94% 60%;
   }
 }
 
@@ -95,5 +95,10 @@
 
 /* Additional utility class for darker text */
 .text-darker {
-  @apply text-gray-800;
+  @apply text-gray-700 dark:text-gray-300;
+}
+
+/* Updated class for very dark text that works in both light/dark modes */
+.text-very-dark {
+  @apply text-gray-900 dark:text-gray-100;
 }
