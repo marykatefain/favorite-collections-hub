@@ -7,6 +7,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/hooks/use-toast";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ItemType } from "@/components/items/ItemCard";
+import { Input } from "@/components/ui/input";
+import { Search } from "lucide-react";
 
 const chartCategories = [
   { id: "all", label: "All", type: null },
@@ -19,8 +21,10 @@ const chartCategories = [
 
 const Charts = () => {
   const [chartItems, setChartItems] = useState<any[]>([]);
+  const [filteredItems, setFilteredItems] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState("all");
+  const [searchQuery, setSearchQuery] = useState("");
   const { toast } = useToast();
 
   useEffect(() => {
@@ -30,6 +34,7 @@ const Charts = () => {
         // In a real app, we would filter by category
         const items = await getGlobalCharts();
         setChartItems(items);
+        setFilteredItems(items);
       } catch (error) {
         console.error("Failed to load charts:", error);
         toast({
@@ -43,17 +48,64 @@ const Charts = () => {
     };
 
     loadCharts();
-  }, [activeCategory, toast]);
+  }, [toast]);
+
+  // Filter charts when category or search query changes
+  useEffect(() => {
+    if (chartItems.length > 0) {
+      let filtered = chartItems;
+      
+      // Filter by category
+      if (activeCategory !== 'all') {
+        const categoryType = chartCategories.find(cat => cat.id === activeCategory)?.type;
+        if (categoryType) {
+          filtered = filtered.filter(item => item.type === categoryType);
+        }
+      }
+      
+      // Filter by search query
+      if (searchQuery.trim() !== '') {
+        const query = searchQuery.toLowerCase();
+        filtered = filtered.filter(item => 
+          item.title.toLowerCase().includes(query)
+        );
+      }
+      
+      setFilteredItems(filtered);
+    }
+  }, [chartItems, activeCategory, searchQuery]);
+
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+  };
 
   return (
     <MainLayout>
       <div className="py-4">
         <h1 className="text-2xl font-bold mb-4">Global Charts</h1>
         
+        {/* Search Bar */}
+        <div className="relative mb-4">
+          <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+            <Search className="h-4 w-4 text-muted-foreground" />
+          </div>
+          <Input
+            type="text"
+            placeholder="Search charts..."
+            className="pl-10"
+            value={searchQuery}
+            onChange={handleSearch}
+          />
+        </div>
+        
         <Tabs defaultValue="all" onValueChange={setActiveCategory}>
-          <TabsList className="grid grid-cols-3 mb-4 sm:grid-cols-6">
+          <TabsList className="mb-4 w-full flex flex-wrap justify-between">
             {chartCategories.map((category) => (
-              <TabsTrigger key={category.id} value={category.id}>
+              <TabsTrigger 
+                key={category.id} 
+                value={category.id}
+                className="flex-1 min-w-fit"
+              >
                 {category.label}
               </TabsTrigger>
             ))}
@@ -70,19 +122,13 @@ const Charts = () => {
                 </div>
               ) : (
                 <div className="space-y-2">
-                  {chartItems.length > 0 ? (
-                    chartItems
-                      .filter(
-                        (item) => 
-                          !category.type || 
-                          item.type === category.type
-                      )
-                      .map((item) => (
-                        <ChartItem key={item.id} {...item} />
-                      ))
+                  {filteredItems.length > 0 ? (
+                    filteredItems.map((item) => (
+                      <ChartItem key={item.id} {...item} />
+                    ))
                   ) : (
                     <div className="text-center py-10 text-muted-foreground">
-                      <p>No items in this category yet</p>
+                      <p>No items found. Try a different search or category.</p>
                     </div>
                   )}
                 </div>

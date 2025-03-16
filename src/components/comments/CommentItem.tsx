@@ -12,7 +12,7 @@ export interface CommentData {
     id: string;
     username: string;
     avatarUrl?: string;
-    rank?: string;
+    rank?: "beginner" | "intermediate" | "advanced" | "expert";
   };
 }
 
