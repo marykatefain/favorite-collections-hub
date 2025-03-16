@@ -21,7 +21,7 @@
     --secondary-foreground: 0 0% 100%;
 
     --muted: 249 240 251;
-    --muted-foreground: 107 114 128;
+    --muted-foreground: 75 85 99; /* Darker muted foreground */
 
     --accent: 199 89 92;
     --accent-foreground: 0 0% 100%;
@@ -91,4 +91,9 @@
 
 .animate-enter {
   @apply animate-fade-in;
+}
+
+/* Additional utility class for darker text */
+.text-darker {
+  @apply text-gray-800;
 }
