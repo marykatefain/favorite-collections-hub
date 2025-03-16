@@ -94,43 +94,7 @@ const Discover = () => {
         </div>
         
         <div className="space-y-6">
-          {/* Suggested Users Section */}
-          <Card>
-            <CardHeader className="pb-3">
-              <div className="flex items-center justify-between">
-                <div>
-                  <CardTitle className="text-base">Suggested Users</CardTitle>
-                  <CardDescription>People you might want to follow</CardDescription>
-                </div>
-                <Users className="h-5 w-5 text-muted-foreground" />
-              </div>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {suggestedUsers.map((user) => (
-                  <Link 
-                    key={user.id} 
-                    to={`/profile/${user.id}`}
-                    className="flex items-center gap-3 hover:bg-muted/50 p-2 rounded-md -mx-2"
-                  >
-                    <Avatar>
-                      <AvatarImage src={user.avatarUrl} alt={user.username} />
-                      <AvatarFallback>{user.username.slice(0, 2).toUpperCase()}</AvatarFallback>
-                    </Avatar>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-1">
-                        <p className="font-medium truncate">{user.username}</p>
-                        <RankBadge rank={user.rank} size="sm" />
-                      </div>
-                      <p className="text-sm text-muted-foreground truncate">{user.bio}</p>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-          
-          {/* Trending Items Section */}
+          {/* Trending Items Section - Now positioned first */}
           <Card>
             <CardHeader className="pb-3">
               <div className="flex items-center justify-between">
@@ -196,6 +160,42 @@ const Discover = () => {
                   )}
                 </div>
               )}
+            </CardContent>
+          </Card>
+          
+          {/* Suggested Users Section - Now positioned second */}
+          <Card>
+            <CardHeader className="pb-3">
+              <div className="flex items-center justify-between">
+                <div>
+                  <CardTitle className="text-base">Suggested Users</CardTitle>
+                  <CardDescription>People you might want to follow</CardDescription>
+                </div>
+                <Users className="h-5 w-5 text-muted-foreground" />
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                {suggestedUsers.map((user) => (
+                  <Link 
+                    key={user.id} 
+                    to={`/profile/${user.id}`}
+                    className="flex items-center gap-3 hover:bg-muted/50 p-2 rounded-md -mx-2"
+                  >
+                    <Avatar>
+                      <AvatarImage src={user.avatarUrl} alt={user.username} />
+                      <AvatarFallback>{user.username.slice(0, 2).toUpperCase()}</AvatarFallback>
+                    </Avatar>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-1">
+                        <p className="font-medium truncate">{user.username}</p>
+                        <RankBadge rank={user.rank} size="sm" />
+                      </div>
+                      <p className="text-sm text-muted-foreground truncate">{user.bio}</p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
             </CardContent>
           </Card>
           
