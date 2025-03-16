@@ -6,7 +6,7 @@ import { ItemType as CardItemType } from "@/components/items/ItemCard";
 export type ItemType = "movie" | "music" | "book" | "tvshow" | "article" | "game";
 
 export interface CollectionItemsProps {
-  isLoading: boolean;
+  isLoading?: boolean;
   items: Array<{
     id: string;
     title: string;
@@ -15,11 +15,13 @@ export interface CollectionItemsProps {
     type: ItemType;
     rating?: number;
   }>;
+  onAddItem?: () => void;
 }
 
 const CollectionItems: React.FC<CollectionItemsProps> = ({
-  isLoading,
+  isLoading = false,
   items,
+  onAddItem,
 }) => {
   if (isLoading) {
     return (

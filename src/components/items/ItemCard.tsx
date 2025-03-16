@@ -15,6 +15,7 @@ export type ItemType =
   | "article" 
   | "meme" 
   | "person" 
+  | "game"
   | "other";
 
 interface ItemCardProps {
@@ -70,6 +71,7 @@ const ItemCard = ({
     article: "📄",
     meme: "😂",
     person: "👤",
+    game: "🎮",
     other: "🔗",
   };
 
