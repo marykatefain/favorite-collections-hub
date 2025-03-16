@@ -699,4 +699,4 @@ export const getGlobalCharts = async (category?: string): Promise<any[]> => {
           rank: 6,
           previousRank: 8,
           title: "The Office",
-          type:
+          type: "tvshow
