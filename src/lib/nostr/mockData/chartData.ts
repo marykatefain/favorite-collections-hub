@@ -1,5 +1,4 @@
-
-import { musicImages, movieImages, bookImages, tvShowImages } from './images';
+import { musicImages, movieImages, bookImages, tvShowImages, horrorMovieImages } from './images';
 
 // Mock chart data for different content types
 export const getMovieChartData = () => [

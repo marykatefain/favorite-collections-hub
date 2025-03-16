@@ -34,7 +34,7 @@ export const getCollectionComments = async (collectionId: string): Promise<Comme
         {
           id: "comment1",
           text: "This is an amazing collection!",
-          timestamp: new Date(Date.now() - 3600 * 1000).toISOString(),
+          createdAt: new Date(Date.now() - 3600 * 1000).toISOString(),
           user: {
             id: "user2",
             username: "bob",
@@ -46,7 +46,7 @@ export const getCollectionComments = async (collectionId: string): Promise<Comme
         {
           id: "comment2",
           text: "Great picks, especially number 3!",
-          timestamp: new Date(Date.now() - 3600 * 24 * 2 * 1000).toISOString(),
+          createdAt: new Date(Date.now() - 3600 * 24 * 2 * 1000).toISOString(),
           user: {
             id: "user3",
             username: "carol",
@@ -58,7 +58,7 @@ export const getCollectionComments = async (collectionId: string): Promise<Comme
         {
           id: "comment3",
           text: "Would love to see more like this.",
-          timestamp: new Date(Date.now() - 3600 * 24 * 5 * 1000).toISOString(),
+          createdAt: new Date(Date.now() - 3600 * 24 * 5 * 1000).toISOString(),
           user: {
             id: "user4",
             username: "dave",
