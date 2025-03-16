@@ -121,39 +121,57 @@ export const getCollectionItems = async (collectionId: string): Promise<NostrIte
   // Simulate API request
   return new Promise((resolve) => {
     setTimeout(() => {
-      // Demo items data
-      resolve([
-        {
-          id: "item1",
-          title: "The Shawshank Redemption",
-          type: "movie",
-          url: "https://www.imdb.com/title/tt0111161/",
-          image: "https://images.unsplash.com/photo-1485846234645-a62644f84728",
-          description: "Two imprisoned men bond over a number of years.",
-          created_at: Date.now() / 1000 - 3600 * 24 * 2,
-          pubkey: "pubkey1",
-        },
-        {
-          id: "item2",
-          title: "The Godfather",
-          type: "movie",
-          url: "https://www.imdb.com/title/tt0068646/",
-          image: "https://images.unsplash.com/photo-1536440136628-849c177e76a1",
-          description: "The aging patriarch of an organized crime dynasty transfers control.",
-          created_at: Date.now() / 1000 - 3600 * 24 * 3,
-          pubkey: "pubkey1",
-        },
-        {
-          id: "item3",
-          title: "The Dark Knight",
-          type: "movie",
-          url: "https://www.imdb.com/title/tt0468569/",
-          image: "https://images.unsplash.com/photo-1509347528160-9a9e33742cdb",
-          description: "When the menace known as the Joker wreaks havoc on Gotham City.",
-          created_at: Date.now() / 1000 - 3600 * 24 * 5,
-          pubkey: "pubkey1",
-        },
-      ]);
+      // Demo items data with various image URLs
+      const movieImages = [
+        "https://images.unsplash.com/photo-1485846234645-a62644f84728",
+        "https://images.unsplash.com/photo-1536440136628-849c177e76a1",
+        "https://images.unsplash.com/photo-1509347528160-9a9e33742cdb",
+        "https://images.unsplash.com/photo-1440404653325-ab127d49abc1",
+        "https://images.unsplash.com/photo-1478720568477-152d9b164e26",
+        "https://images.unsplash.com/photo-1542204165-65bf26472b9b"
+      ];
+      
+      const bookImages = [
+        "https://images.unsplash.com/photo-1589998059171-988d887df646",
+        "https://images.unsplash.com/photo-1512820790803-83ca734da794",
+        "https://images.unsplash.com/photo-1544947950-fa07a98d237f",
+        "https://images.unsplash.com/photo-1519682337058-a94d519337bc",
+        "https://images.unsplash.com/photo-1495446815901-a7297e633e8d"
+      ];
+      
+      const musicImages = [
+        "https://images.unsplash.com/photo-1470225620780-dba8ba36b745",
+        "https://images.unsplash.com/photo-1511379938547-c1f69419868d",
+        "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f",
+        "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae",
+        "https://images.unsplash.com/photo-1505740420928-5e560c06d30e"
+      ];
+      
+      let imageSet = movieImages;
+      if (collectionId === "collection2") {
+        imageSet = bookImages;
+      } else if (collectionId === "collection3") {
+        imageSet = musicImages;
+      }
+      
+      // Create between 3-6 items
+      const itemCount = Math.max(3, Math.min(6, Math.floor(Math.random() * 7)));
+      const items = Array.from({ length: itemCount }).map((_, i) => ({
+        id: `item${collectionId}-${i+1}`,
+        title: collectionId.includes("1") ? `Movie Title ${i+1}` :
+               collectionId.includes("2") ? `Book Title ${i+1}` :
+               collectionId.includes("3") ? `Song Title ${i+1}` : `Item ${i+1}`,
+        type: collectionId.includes("1") ? "movie" :
+              collectionId.includes("2") ? "book" :
+              collectionId.includes("3") ? "music" : "item",
+        url: `https://example.com/${collectionId}/${i+1}`,
+        image: imageSet[i % imageSet.length],
+        description: `Description for item ${i+1} in collection ${collectionId}`,
+        created_at: Date.now() / 1000 - 3600 * 24 * (i+1),
+        pubkey: "pubkey1",
+      }));
+      
+      resolve(items);
     }, 500);
   });
 };

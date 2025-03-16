@@ -11,6 +11,10 @@ export interface Collection {
   previewImages?: string[];
   itemType: string;
   parentId?: string;
+  likes?: number;
+  comments?: number;
+  zaps?: number;
+  shares?: number;
 }
 
 interface CollectionsListProps {
@@ -51,10 +55,12 @@ const CollectionsList = ({
         )}
       </div>
 
-      <div className="space-y-3">
+      <div className="space-y-4">
         {parentCollections.map((collection) => (
           <React.Fragment key={collection.id}>
-            <CollectionCard {...collection} />
+            <CollectionCard 
+              {...collection} 
+            />
             
             {/* Render child collections if any */}
             {childCollectionsByParent[collection.id] && 

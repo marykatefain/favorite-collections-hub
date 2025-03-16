@@ -2,7 +2,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ChevronRight } from "lucide-react";
+import { Heart, MessageSquare, Zap, Share2, ChevronRight } from "lucide-react";
+import CollectionCarousel from "./CollectionCarousel";
 
 interface CollectionCardProps {
   id: string;
@@ -10,6 +11,10 @@ interface CollectionCardProps {
   itemCount: number;
   previewImages?: string[];
   itemType: string;
+  likes?: number;
+  comments?: number;
+  zaps?: number;
+  shares?: number;
 }
 
 const CollectionCard = ({
@@ -18,6 +23,10 @@ const CollectionCard = ({
   itemCount,
   previewImages = [],
   itemType,
+  likes = 0,
+  comments = 0,
+  zaps = 0,
+  shares = 0,
 }: CollectionCardProps) => {
   return (
     <Link to={`/collection/${id}`}>
@@ -37,18 +46,32 @@ const CollectionCard = ({
           </div>
           
           {previewImages && previewImages.length > 0 && (
-            <div className="grid grid-cols-3 gap-1 mt-2">
-              {previewImages.slice(0, 3).map((img, i) => (
-                <div key={i} className="aspect-square rounded-md overflow-hidden bg-muted">
-                  <img 
-                    src={img} 
-                    alt={`${title} preview`} 
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              ))}
+            <div className="mt-2">
+              <CollectionCarousel images={previewImages} collectionId={id} />
             </div>
           )}
+          
+          {/* Collection stats */}
+          <div className="flex items-center justify-between mt-3 text-muted-foreground">
+            <div className="flex items-center space-x-3">
+              <div className="flex items-center space-x-1">
+                <Heart className="h-3.5 w-3.5" />
+                <span className="text-xs">{likes}</span>
+              </div>
+              <div className="flex items-center space-x-1">
+                <MessageSquare className="h-3.5 w-3.5" />
+                <span className="text-xs">{comments}</span>
+              </div>
+              <div className="flex items-center space-x-1">
+                <Zap className="h-3.5 w-3.5 text-nostr-orange" />
+                <span className="text-xs">{zaps}</span>
+              </div>
+              <div className="flex items-center space-x-1">
+                <Share2 className="h-3.5 w-3.5" />
+                <span className="text-xs">{shares}</span>
+              </div>
+            </div>
+          </div>
         </CardContent>
       </Card>
     </Link>
