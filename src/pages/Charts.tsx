@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import ChartItem from "@/components/charts/ChartItem";
 import { getGlobalCharts } from "@/lib/nostr";
@@ -8,7 +8,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ItemType } from "@/components/items/ItemCard";
 import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
+import { Search, ChevronLeft, ChevronRight } from "lucide-react";
 
 const chartCategories = [
   { id: "all", label: "All", type: null },
@@ -26,6 +26,53 @@ const Charts = () => {
   const [activeCategory, setActiveCategory] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
   const { toast } = useToast();
+  const tabsListRef = useRef<HTMLDivElement>(null);
+  const [showScrollButtons, setShowScrollButtons] = useState(false);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
+
+  // Check if tabs need scroll buttons
+  useEffect(() => {
+    const checkScroll = () => {
+      if (!tabsListRef.current) return;
+      
+      const { scrollWidth, clientWidth, scrollLeft } = tabsListRef.current;
+      setShowScrollButtons(scrollWidth > clientWidth);
+      setCanScrollLeft(scrollLeft > 0);
+      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 5); // 5px buffer
+    };
+
+    checkScroll();
+    window.addEventListener('resize', checkScroll);
+    
+    return () => {
+      window.removeEventListener('resize', checkScroll);
+    };
+  }, []);
+
+  // Update scroll indicators when scrolling
+  const handleScroll = () => {
+    if (!tabsListRef.current) return;
+    
+    const { scrollWidth, clientWidth, scrollLeft } = tabsListRef.current;
+    setCanScrollLeft(scrollLeft > 0);
+    setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 5); // 5px buffer
+  };
+
+  // Scroll tabs left or right
+  const scrollTabs = (direction: 'left' | 'right') => {
+    if (!tabsListRef.current) return;
+    
+    const scrollAmount = 200; // Pixels to scroll
+    const currentScroll = tabsListRef.current.scrollLeft;
+    
+    tabsListRef.current.scrollTo({
+      left: direction === 'left' 
+        ? currentScroll - scrollAmount 
+        : currentScroll + scrollAmount,
+      behavior: 'smooth'
+    });
+  };
 
   useEffect(() => {
     const loadCharts = async () => {
@@ -99,17 +146,48 @@ const Charts = () => {
         </div>
         
         <Tabs defaultValue="all" onValueChange={setActiveCategory}>
-          <TabsList className="mb-4 w-full flex flex-wrap justify-between">
-            {chartCategories.map((category) => (
-              <TabsTrigger 
-                key={category.id} 
-                value={category.id}
-                className="flex-1 min-w-fit"
+          <div className="relative">
+            {/* Left scroll button */}
+            {showScrollButtons && (
+              <button 
+                onClick={() => scrollTabs('left')}
+                className={`absolute left-0 top-0 z-10 h-10 w-8 flex items-center justify-center bg-background/80 backdrop-blur-sm ${!canScrollLeft ? 'opacity-0' : 'opacity-100'} transition-opacity`}
+                disabled={!canScrollLeft}
+                aria-hidden={!canScrollLeft}
               >
-                {category.label}
-              </TabsTrigger>
-            ))}
-          </TabsList>
+                <ChevronLeft className="h-4 w-4" />
+              </button>
+            )}
+            
+            {/* Tabs list with horizontal scroll */}
+            <TabsList 
+              ref={tabsListRef}
+              onScroll={handleScroll}
+              className="mb-4 w-full flex overflow-x-auto scrollbar-hide"
+            >
+              {chartCategories.map((category) => (
+                <TabsTrigger 
+                  key={category.id} 
+                  value={category.id}
+                  className="flex-shrink-0"
+                >
+                  {category.label}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+            
+            {/* Right scroll button */}
+            {showScrollButtons && (
+              <button 
+                onClick={() => scrollTabs('right')}
+                className={`absolute right-0 top-0 z-10 h-10 w-8 flex items-center justify-center bg-background/80 backdrop-blur-sm ${!canScrollRight ? 'opacity-0' : 'opacity-100'} transition-opacity`}
+                disabled={!canScrollRight}
+                aria-hidden={!canScrollRight}
+              >
+                <ChevronRight className="h-4 w-4" />
+              </button>
+            )}
+          </div>
 
           {chartCategories.map((category) => (
             <TabsContent key={category.id} value={category.id}>
