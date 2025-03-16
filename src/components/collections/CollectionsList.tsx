@@ -1,5 +1,6 @@
 
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import CollectionCard from "./CollectionCard";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
@@ -28,6 +29,8 @@ const CollectionsList = ({
   isOwnProfile = false,
   onAddCollection,
 }: CollectionsListProps) => {
+  const navigate = useNavigate();
+  
   // Group collections by parent ID
   const parentCollections = collections.filter(c => !c.parentId);
   const childCollections = collections.filter(c => c.parentId);
@@ -43,12 +46,16 @@ const CollectionsList = ({
     }
   });
 
+  const handleAddCollection = () => {
+    navigate("/collection/add");
+  };
+
   return (
     <div className="space-y-4 py-2">
       <div className="flex items-center justify-between">
         <h2 className="text-lg font-semibold">Collections</h2>
         {isOwnProfile && (
-          <Button size="sm" onClick={onAddCollection}>
+          <Button size="sm" onClick={handleAddCollection}>
             <Plus className="h-4 w-4 mr-1" />
             New Collection
           </Button>
@@ -80,7 +87,7 @@ const CollectionsList = ({
           <div className="text-center py-8 text-muted-foreground">
             <p>No collections yet</p>
             {isOwnProfile && (
-              <Button variant="link" onClick={onAddCollection} className="mt-2">
+              <Button variant="link" onClick={handleAddCollection} className="mt-2">
                 Create your first collection
               </Button>
             )}

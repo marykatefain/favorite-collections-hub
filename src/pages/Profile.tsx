@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import MainLayout from "@/components/layout/MainLayout";
@@ -116,13 +115,6 @@ const Profile = () => {
     });
   };
 
-  const handleAddCollection = () => {
-    toast({
-      title: "New Collection",
-      description: "Collection creation coming soon!",
-    });
-  };
-
   return (
     <MainLayout>
       <div className="py-4">
@@ -170,7 +162,6 @@ const Profile = () => {
             <CollectionsList
               collections={collections}
               isOwnProfile={isOwnProfile}
-              onAddCollection={handleAddCollection}
             />
           </>
         ) : (
