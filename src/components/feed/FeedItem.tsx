@@ -118,7 +118,7 @@ const FeedItem = ({
             </div>
             <div className="flex-1">
               <h3 className="font-medium line-clamp-2">{item.title}</h3>
-              <span className="text-xs text-muted-foreground">{item.type}</span>
+              <span className="text-xs text-darker">{item.type}</span>
             </div>
           </div>
         </Link>
