@@ -1,5 +1,8 @@
 // This is a simplified Nostr service for demo purposes
 // In a real application, we would use a proper Nostr client library
+import { Rank } from "@/components/user/RankBadge";
+import { CommentData } from "@/components/comments/CommentItem";
+import { ItemType } from "@/components/collections/CollectionItems";
 
 export interface NostrEvent {
   id: string;
@@ -129,7 +132,7 @@ export const getCollectionItems = async (collectionId: string): Promise<NostrIte
         "https://images.unsplash.com/photo-1478720568477-152d9b164e26",
         "https://images.unsplash.com/photo-1542204165-65bf26472b9b",
         "https://images.unsplash.com/photo-1594909122845-11baa439b7bf",
-        "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c",
+        "https://images.unsplash.com/photo-1517604934242-7e0c8ed2963c",
         "https://images.unsplash.com/photo-1524985069026-dd778a71c7b4",
         "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba"
       ];
@@ -144,7 +147,7 @@ export const getCollectionItems = async (collectionId: string): Promise<NostrIte
         "https://images.unsplash.com/photo-1497633762265-9d179a990aa6",
         "https://images.unsplash.com/photo-1516979187457-637abb4f9353",
         "https://images.unsplash.com/photo-1543002588-bfa74002ed7e",
-        "https://images.unsplash.com/photo-1507842217343-583bb7270b66"
+        "https://images.unsplash.com/photo-1507838153414-b4b713384a76"
       ];
       
       const musicImages = [
@@ -438,7 +441,7 @@ export const getGlobalCharts = async (category?: string): Promise<any[]> => {
 };
 
 // Mock data for collection comments
-export const getCollectionComments = async (collectionId: string): Promise<any[]> => {
+export const getCollectionComments = async (collectionId: string): Promise<CommentData[]> => {
   // In a real app, we would fetch comments from Nostr
   // For now, we'll return mock data
   await new Promise(resolve => setTimeout(resolve, 500)); // Fake delay
@@ -452,7 +455,7 @@ export const getCollectionComments = async (collectionId: string): Promise<any[]
         id: "user2",
         username: "bob",
         avatarUrl: "https://images.unsplash.com/photo-1599566150163-29194dcaad36",
-        rank: "C",
+        rank: "C" as Rank,
       },
     },
     {
@@ -463,7 +466,7 @@ export const getCollectionComments = async (collectionId: string): Promise<any[]
         id: "user3",
         username: "carol",
         avatarUrl: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80",
-        rank: "A",
+        rank: "A" as Rank,
       },
     },
     {
@@ -474,7 +477,7 @@ export const getCollectionComments = async (collectionId: string): Promise<any[]
         id: "user4",
         username: "dave",
         avatarUrl: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e",
-        rank: "B",
+        rank: "B" as Rank,
       },
     },
     {
@@ -485,7 +488,7 @@ export const getCollectionComments = async (collectionId: string): Promise<any[]
         id: "user5",
         username: "emma",
         avatarUrl: "https://images.unsplash.com/photo-1580489944761-15a19d654956",
-        rank: "S",
+        rank: "S" as Rank,
       },
     },
     {
@@ -496,7 +499,7 @@ export const getCollectionComments = async (collectionId: string): Promise<any[]
         id: "user6",
         username: "frank",
         avatarUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d",
-        rank: "A",
+        rank: "A" as Rank,
       },
     },
   ];

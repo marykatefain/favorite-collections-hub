@@ -2,7 +2,7 @@
 import React from "react";
 import { cn } from "@/lib/utils";
 
-type Rank = "A" | "B" | "C" | "D" | "E" | "F";
+export type Rank = "A" | "B" | "C" | "D" | "E" | "F" | "S";
 
 interface RankBadgeProps {
   rank: Rank;
@@ -19,6 +19,7 @@ const RankBadge = ({ rank, size = "md", showLabel = false, className }: RankBadg
     D: "bg-rank-d border-rank-d",
     E: "bg-rank-e border-rank-e",
     F: "bg-rank-f border-rank-f",
+    S: "bg-rank-s border-rank-s",
   };
 
   const rankLabel: Record<Rank, string> = {
@@ -28,6 +29,7 @@ const RankBadge = ({ rank, size = "md", showLabel = false, className }: RankBadg
     D: "New",
     E: "Limited",
     F: "Unknown",
+    S: "Elite",
   };
 
   const sizeClasses = {

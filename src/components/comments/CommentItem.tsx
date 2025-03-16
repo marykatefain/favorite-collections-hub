@@ -4,7 +4,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { formatDistanceToNow } from "date-fns";
 import RankBadge from "@/components/user/RankBadge";
 
-export type Rank = "beginner" | "intermediate" | "advanced" | "expert" | "A" | "B" | "C" | "D" | "S";
+// Using the Rank type from RankBadge.tsx
+import type { Rank } from "@/components/user/RankBadge";
 
 export interface CommentData {
   id: string;

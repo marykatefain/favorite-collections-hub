@@ -4,13 +4,13 @@ import { Link } from "react-router-dom";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Share2, Users, Plus } from "lucide-react";
-import RankBadge from "@/components/user/RankBadge";
+import RankBadge, { Rank } from "@/components/user/RankBadge";
 
 interface CollectionOwner {
   id: string;
   username: string;
   avatarUrl: string;
-  rank: string;
+  rank: Rank;
 }
 
 interface CollectionHeaderProps {

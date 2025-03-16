@@ -5,10 +5,11 @@ import MainLayout from "@/components/layout/MainLayout";
 import { useToast } from "@/hooks/use-toast";
 import { getCollectionItems, getCollectionComments } from "@/lib/nostr";
 import CollectionHeader from "@/components/collections/CollectionHeader";
-import CollectionItems from "@/components/collections/CollectionItems";
+import CollectionItems, { ItemType } from "@/components/collections/CollectionItems";
 import CollectionLoading from "@/components/collections/CollectionLoading";
 import CommentsSection from "@/components/comments/CommentsSection";
 import { CommentData } from "@/components/comments/CommentItem";
+import { Rank } from "@/components/user/RankBadge";
 
 const CollectionDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -34,7 +35,7 @@ const CollectionDetail = () => {
             id: "user1",
             username: "alice",
             avatarUrl: "https://images.unsplash.com/photo-1494790108377-be9c29b29330",
-            rank: "A",
+            rank: "A" as Rank,
           },
           itemCount: 3,
           followersCount: 42,
@@ -49,7 +50,7 @@ const CollectionDetail = () => {
           const formattedItems = collectionItems.map((item, index) => ({
             id: item.id,
             title: item.title,
-            type: item.type,
+            type: item.type as ItemType,
             imageUrl: item.image,
             source: item.url,
             likes: Math.floor(Math.random() * 100),

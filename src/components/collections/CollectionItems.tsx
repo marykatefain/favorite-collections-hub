@@ -3,11 +3,13 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import ItemCard from "@/components/items/ItemCard";
 
+export type ItemType = "movie" | "book" | "music" | "game" | "app" | "article" | "podcast" | "video" | "other";
+
 interface CollectionItem {
   id: string;
   title: string;
   imageUrl: string;
-  type: string;
+  type: ItemType;
   source: string;
   likes: number;
   comments: number;
