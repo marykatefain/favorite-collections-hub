@@ -4,6 +4,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { formatDistanceToNow } from "date-fns";
 import RankBadge from "@/components/user/RankBadge";
 
+export type Rank = "beginner" | "intermediate" | "advanced" | "expert" | "A" | "B" | "C" | "D" | "S";
+
 export interface CommentData {
   id: string;
   text: string;
@@ -12,7 +14,7 @@ export interface CommentData {
     id: string;
     username: string;
     avatarUrl?: string;
-    rank?: "beginner" | "intermediate" | "advanced" | "expert";
+    rank?: Rank;
   };
 }
 
